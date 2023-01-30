@@ -1,4 +1,4 @@
-import { MarkdownView, Plugin } from 'obsidian';
+import { Plugin } from 'obsidian';
 
 
 export default class BackSlashLatexMacroPlugin extends Plugin {
@@ -198,41 +198,35 @@ export default class BackSlashLatexMacroPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'insert-lambda',
-			name: 'Add λ',
+			name: 'Add Lambda Symbol (λ)',
 			hotkeys: [
-			{modifiers: [insertModifier], key: "\\"},
+				{modifiers: [insertModifier], key: "\\"},
 			],
-			editorCallback: () => {
-				const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (view) {
-					view.editor.replaceSelection("λ");
-				}
+			editorCallback: (editor) => {
+				editor.replaceSelection("λ");
 			}
 		})
 
 		this.addCommand({
 			id: 'complete',
-			name: 'Complete character',
+			name: 'Replace Backslash Macro with Symbol',
 			hotkeys: [
-			{modifiers: [completeModifier], key: "\\"},
+				{modifiers: [completeModifier], key: "\\"},
 			],
-			editorCallback: () => {
-				const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (view) {
-					const cursor = view.editor.getCursor();
-					const line = view.editor.getLine(cursor.line);
-					const pos = cursor.ch;
-					const lineUtil = line.substring(0, pos);
-					const lastBackslash = lineUtil.lastIndexOf("\\");
-					if (lastBackslash === -1) { return; }
-					const keyWord = lineUtil.substring(lastBackslash + 1);
-					if (keyWord === "") { return; }
-					const replaceBy = this.REPLACE[keyWord];
-					if (replaceBy) {
-						const from = {line: cursor.line, ch: cursor.ch - keyWord.length - 1};
-						const to = cursor;
-						view.editor.replaceRange(replaceBy, from, to, null);
-					}
+			editorCallback: (editor) => {
+				const cursor = editor.getCursor();
+				const line = editor.getLine(cursor.line);
+				const pos = cursor.ch;
+				const lineUtil = line.substring(0, pos);
+				const lastBackslash = lineUtil.lastIndexOf("\\");
+				if (lastBackslash === -1) { return; }
+				const keyWord = lineUtil.substring(lastBackslash + 1);
+				if (keyWord === "") { return; }
+				const replaceBy = this.REPLACE[keyWord];
+				if (replaceBy) {
+					const from = {line: cursor.line, ch: cursor.ch - keyWord.length - 1};
+					const to = cursor;
+					editor.replaceRange(replaceBy, from, to, null);
 				}
 			}
 		});
