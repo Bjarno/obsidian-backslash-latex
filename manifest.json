@@ -1,7 +1,7 @@
 {
 	"id": "backslash-latex-macro",
 	"name": "Backslash LaTeX Macro",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "Replace LaTeX macros with (Unicode) characters. Inspired by DrRacket.",
 	"author": "Bjarno",

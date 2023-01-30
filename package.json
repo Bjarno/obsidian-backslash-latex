@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-backslash-latex",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Replace LaTeX macros with (Unicode) characters. Inspired by DrRacket.",
 	"main": "main.js",
 	"scripts": {
